@@ -42,8 +42,8 @@ def pattern(s) #report3
 	_s=s+"0"
 	cur=0
 	f=nil
-	_s.each_byte{|c|
-		x=a[cur][c.chr]
+	_s.chars{|c|
+		x=a[cur][c]
 		if cur!=0 && x==0 then
 			if f then print ", " end; f=1
 			print "width=#{cur}"

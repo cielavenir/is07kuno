@@ -72,8 +72,8 @@ end
 #と思いましたが、AAで…ですか。まあ演習2と5があるのでご勘弁ください(ぇ
 def accept(s,atm)
 	cur = 0
-	s.each_byte{|c|
-		cur = atm[cur][c.chr];
+	s.chars{|c|
+		cur = atm[cur][c];
 		if cur == nil then return false end
 	}
 	return atm[cur][:final] == true
