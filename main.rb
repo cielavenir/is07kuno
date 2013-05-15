@@ -63,6 +63,8 @@ __require "phy13.rb"
 
 #生物実験
 __require "bio17.rb"
+
+__require "medige2012.rb"
 return true
 end
 
