@@ -70,7 +70,7 @@ class PPMImage
 	end
 
 	def read(name)
-		open(name,"rb"){|f|
+		File.open(name,"rb"){|f|
 			i=0
 			f.each{|l|
 				if i!=4
@@ -117,7 +117,7 @@ class PPMImage
 	def write2p6(name,x1,y1,x2,y2)
 		if x1>x2 then x1,x2 = x2,x1 end
 		if y1>y2 then y1,y2 = y2,y1 end
-		open(name,"wb"){|f|
+		File.open(name,"wb"){|f|
 			f.print "P6 #{x2-x1+1} #{y2-y1+1} 255\n"
 			y1.step(y2){|j|
 				x1.step(x2){|i|
@@ -135,7 +135,7 @@ class PPMImage
 	def write2p3(name,x1,y1,x2,y2)
 		if x1>x2 then x1,x2 = x2,x1 end
 		if y1>y2 then y1,y2 = y2,y1 end
-		open(name,"wb"){|f|
+		File.open(name,"wb"){|f|
 			f.print "P3 #{@x} #{@y} 255\n"
 			y1.step(y2){|j|
 				x1.step(x2){|i|
@@ -282,7 +282,7 @@ end
 
 class BMPImage < PPMImage #Lite OS/2 Bitmap Writer
 	def write2(name,x1,y1,x2,y2)
-		open(name,"wb"){|f|
+		File.open(name,"wb"){|f|
 			padding = (x2-x1+1)*3%4
 			if padding>0 then padding=4-padding end
 			f.print "BM"+(26+(y2-y1+1)*((x2-x1+1)*3+padding)).to_binary_little(4)+0.to_binary_little(4)+26.to_binary_little(4)+

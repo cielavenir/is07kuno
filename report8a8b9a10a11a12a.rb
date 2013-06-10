@@ -26,14 +26,14 @@ class Buffer
 		@cur.data[Regexp.new(a[1])] = a[2]
 	end
 	def read(file)
-		open(file, "r"){|f|
+		File.open(file, "rb"){|f|
 			f.each{|s| insert(s)}
 		}
 		top
 	end
 	def save(file)
 		top
-		open(file, "w"){|f|
+		File.open(file, "wb"){|f|
 			while !end? do f.puts(@cur.data); forward end
 		}
 	end

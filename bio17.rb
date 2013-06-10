@@ -40,7 +40,7 @@ def bio17a
 	data1.each{|x| x[2]=x[1]/m1; x[3]=x[2]/Math.sin(degtorad(x[0])); x[4]=1-Math.cos(degtorad(x[0]))}
 	data2.each{|x| x[2]=x[1]/m2; x[3]=x[2]/Math.sin(degtorad(x[0])); x[4]=1-Math.cos(degtorad(x[0]))}
 	data.each{|x| x[2]=x[1]/m3; x[3]=x[2]/Math.sin(degtorad(x[0])); x[4]=1-Math.cos(degtorad(x[0]))}
-	open("bio17a.csv","w"){|f|
+	File.open("bio17a.csv","w"){|f|
 		f.print "Deg,f,F,L\n"
 		data1.each{|x| f.print x[0].to_s+","+x[2].to_s+","+x[3].to_s+","+x[4].to_s+"\n"}
 		data2.each{|x| f.print x[0].to_s+","+x[2].to_s+","+x[3].to_s+","+x[4].to_s+"\n"}
@@ -54,7 +54,7 @@ def bio17b
 	data2=[[0.347,402.783],[0.439,361.116],[0.576,208.333],[0.552,319.444],[0.632,111.111],[0.795,41.667],[0.963,0.591],[0.342,569.443]]
 	data1.each{|x| x[2]=x[0]*x[1]}
 	data2.each{|x| x[2]=x[0]*x[1]}
-	open("bio17b.csv","w"){|f|
+	File.open("bio17b.csv","w"){|f|
 		f.print "P,V,W\n"
 		data1.each{|x| f.print x[0].to_s+","+x[1].to_s+","+x[2].to_s+"\n"}
 		data2.each{|x| f.print x[0].to_s+","+x[1].to_s+","+x[2].to_s+"\n"}
