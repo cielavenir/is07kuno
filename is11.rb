@@ -3,7 +3,7 @@
 
 #[1]
 #(a) (0,8,)4,-1,1
-def s(a,i,j)
+def is11s(a,i,j)
 	return i.step(j-1).reduce(0){|s,i|s+=a[i]}
 end
 #(b) O(N)
@@ -12,7 +12,7 @@ def mss(a,x,y)
 	m = 0
 	x.step(y-1){|i|
 		i.step(y-1){|j|
-			m = max(m,s(a,i,j))
+			m = max(m,is11s(a,i,j))
 		}
 	}
 	m
@@ -51,7 +51,7 @@ def pow_binary(x,y)
 	z
 end
 #f(2,4) => 16, f(3,5) => 243 (a) therefore, f(a,b) => a**b (b)
-#要するにバイナリ方法で累乗を計算している。
+#要するにバイナリ法で累乗を計算している。
 
 #[3]
 #(a) (b) explained in is06.

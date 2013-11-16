@@ -41,6 +41,7 @@ __require "is08.rb"
 #is09 -> 理論中心
 __require "is10.rb"
 __require "is11.rb"
+__require "is12.rb"
 __require "report1a1b2a2b3a3b4a5a5b6a6b7a.rb"
 __require "report4b.rb"
 __require "report7b.rb"
