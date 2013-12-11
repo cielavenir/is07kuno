@@ -29,6 +29,7 @@ def __require(s)
 end
 
 def init
+__require "libciel.rb"
 __require "core.rb"
 __require "fib.rb"
 __require "extra.rb"

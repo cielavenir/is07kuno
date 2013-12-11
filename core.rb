@@ -146,13 +146,14 @@ class Array
 
 	def average() return self.sum.to_f/self.length end
 	def duplicate() return self.uniq.select{|i| self.index(i) != self.rindex(i)} end
-
+=begin
 	def squeeze
 		if self.length==0 then return [] end
 		a=[self[0]]
 		1.step(self.length-1){|i| if self[i]!=self[i-1] then a.push(self[i]) end}
 		return a
 	end
+=end
 	def squeeze!() self.replace(self.squeeze) end	
 end
 
@@ -161,15 +162,10 @@ class String
 		self.force_encoding(enc) if RUBY_VERSION >= '1.9'
 		return self
 	end
-	def uriEncode() CGI.escape(self) end 
+	def uriEncode() CGI.escape(self) end
 	def uriDecode() CGI.unescape(self) end
 	def realpath()  Pathname(self).realpath.to_s end
 	def dirname()   Pathname(self).dirname.to_s end
-	def rotate(count=1)
-		count=self.length+count if count<0
-		self.slice(self.length-count,count)+self.slice(0,self.length-count)
-	end
-	def rotate!(count=1) self.replace(self.rotate(count)) end
 end
 
 #String.encode for Ruby1.8 http://www.ownway.info/Blog/2011/06/ruby-182-stringencode-1.html
@@ -290,13 +286,6 @@ if RUBY_VERSION < '1.9.0' then
 end
 
 class Hash
-	def exists_rec?(a)
-		#if a.length<1 then return false
-		if !self.include?(a[0]) then return nil end           #if not found
-		if a.length==1 then return self[a[0]] end             #if found and last
-		if !self[a[0]].is_a?(Hash) then return nil end #if not last and child not hash
-		return self[a[0]].exists_rec?(a[1..-1])               #check child
-	end
 	def to_query
 		a=Array.new
 		self.each{|k,v|
@@ -305,11 +294,6 @@ class Hash
 			}
 		}
 		return a.join('&')
-	end
-	def patch(par)
-		h=self.dup
-		par.each{|k,v|h[k]=v}
-		return h
 	end
 end
 
