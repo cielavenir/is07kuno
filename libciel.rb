@@ -39,7 +39,7 @@ end
 
 class Array
 	def permutation2(n=self.size)
-		return to_enum(:permutation2) unless block_given?
+		return to_enum(:permutation2,n) unless block_given?
 		return if n<0||self.size<n
 		a=self.sort
 		yield a.dup[0,n]
