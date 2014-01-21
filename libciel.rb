@@ -2,6 +2,10 @@ module LibCiel
 	VERSION='0.0.0.1'
 end
 
+module Kernel
+	def zip(a) a.shift.zip(*a) end
+end
+
 module Enumerable
 	def squeeze
 		r=[]
@@ -43,7 +47,7 @@ class Array
 		return if n<0||self.size<n
 		a=self.sort
 		yield a.dup[0,n]
-		while true
+		loop{
 			a=a[0,n]+a[n..-1].reverse
 			k=(a.size-2).downto(0).find{|i|a[i]<a[i+1]}
 			break if !k
@@ -51,7 +55,7 @@ class Array
 			a[k],a[l]=a[l],a[k]
 			a=a[0,k+1]+a[k+1..-1].reverse
 			yield a.dup[0,n]
-		end
+		}
 	end
 end
 
