@@ -1,6 +1,17 @@
 module LibCiel
 	#Version string
-	VERSION='0.0.0.1'
+	VERSION='0.0.0.2'
+end
+
+class Object
+	#PHPic extract(). Hash will be injected into self as instance variables (@var).
+	def extract(h,overwrite=false)
+		h.each{|k,v|
+			if overwrite || !self.instance_variable_defined?('@'+k) then
+				self.instance_variable_set('@'+k,v) #k should always be String
+			end
+		}
+	end
 end
 
 module Kernel
@@ -96,20 +107,18 @@ class Hash
 	end
 end
 
-begin
 module DBI
-	class << self
-		#connect-transaction-disconnect triplet.
-		# To use this method, you need to require dbi before requiring libciel.
-		def connect_transaction(driver_url, user=nil, auth=nil, params=nil, &block)
-			x=connect(driver_url, user, auth, params)
-			begin
-				x.transaction(&block)
-			ensure
-				x.disconnect
-			end
+	#connect-transaction-disconnect triplet.
+	# To use this method, you need to require dbi before requiring libciel.
+	def self.connect_transaction(driver_url, user=nil, auth=nil, params=nil, &block)
+		x=connect(driver_url, user, auth, params)
+		begin
+			x.transaction(&block)
+		ensure
+			x.disconnect
 		end
 	end
+
 	class DatabaseHandle
 		#execute-map,count-finish triplet.
 		# To use this method, you need to require dbi before requiring libciel.
@@ -125,4 +134,3 @@ module DBI
 		end
 	end
 end
-rescue NameError=>e; end
