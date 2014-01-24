@@ -1,6 +1,6 @@
 module LibCiel
 	#Version string
-	VERSION='0.0.0.2'
+	VERSION='0.0.0.3'
 end
 
 class Object
@@ -16,8 +16,12 @@ end
 
 module Kernel
 	#Pythonic zip. The same as a.shift.zip(*a).
-	def zip(a) a.shift.zip(*a) end
+	def zip(_a)
+		a=_a.dup
+		a.shift.zip(*a)
+	end
 end
+
 
 module Enumerable
 	#Squeezes the same element. This behaves like C++ unique().
@@ -91,19 +95,13 @@ end
 
 class Hash
 	#nil safe version of Hash#[].
-	# h.exists_rec?(['hello','world']) is the same as h['hello'].try.send(:[],'world').
-	def exists_rec?(a)
-		#if a.length<1 then return false
-		if !self.include?(a[0]) then return nil end           #if not found
-		if a.length==1 then return self[a[0]] end             #if found and last
-		if !self[a[0]].is_a?(Hash) then return nil end #if not last and child not hash
-		return self[a[0]].exists_rec?(a[1..-1])               #check child
-	end
-	#Returns self.dup with overwriting par.
-	def patch(par)
-		h=self.dup
-		par.each{|k,v|h[k]=v}
-		return h
+	# h.fetch_nested(*['hello','world']) is basically the same as h['hello'].try.send(:[],'world').
+	def fetch_nested(*keys)
+		begin
+			keys.reduce(self){|accum, k| accum.fetch(k)}
+		rescue (RUBY_VERSION<'1.9' ? IndexError : KeyError)
+			block_given? ? yield(*keys) : nil
+		end
 	end
 end
 
