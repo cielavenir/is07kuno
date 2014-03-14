@@ -403,11 +403,22 @@ def gauss(a)
 	if !a || a.length==0 then return nil end
 	n=a.length
 	n.times{|i| #各式(i)で
+		if a[i][i]==0
+			if (i+1).step(n-1){|j|
+				if a[j][i]!=0
+					i.step(n){|k| a[i][k]+=a[j][k]}
+					break
+				end
+			}
+				raise 'given equation is not solvable'
+			end
+		end
 		n.times{|j|
-		if j!=i then #式jの
-			r = a[j][i] / a[i][i].to_f
-			i.step(n){|k| a[j][k] = a[j][k] - a[i][k]*r} #第i項以降を消去
-		end}
+			if j!=i then #式jの
+				r = a[j][i] / a[i][i].to_f
+				i.step(n){|k| a[j][k] = a[j][k] - a[i][k]*r} #第i項以降を消去
+			end
+		}
 		#p(a)
 	}
 
