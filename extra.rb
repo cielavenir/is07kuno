@@ -58,17 +58,39 @@ end
 
 #PKU1006のAnalysticな解を求めるために作った中国剰余定理solver(x=a[i][0] mod a[i][1]を解く)。
 #Fortran書いてるとRubyを忘れるねw
-def chinese(a)
-	if !a || a.length==0 then return nil end
-	ret=0;m=1;
-	a.length.times{|i| m*=a[i][1]}
+def chinese_old(a)
+	return nil if !a||a.empty?
+	ret=0;m=1
+	a.length.times{|i|m*=a[i][1]}
 	a.length.times{|i|
 		p=a[i][1];q=m/p;s=0
-		while s%p!=1 do s+=q end
-		ret+=s*a[i][0]
+		j=0
+		while j<p
+			break if s%p==1
+			s+=q
+			j+=1
+		end
+		return nil if j==p
+		ret=(ret+s*a[i][0])%m
 		#p s
 	}
-	return ret%m,m
+	return ret,m
+end
+
+def egcd(x,y)
+	return [x,1,0] if y==0
+	g,a,b=egcd(y,x%y)
+	[g,b,a-x/y*b]
+end
+
+def chinese(a)
+	return nil if !a||a.empty?
+	a.reduce([0,1]){|(a1,m1),(a2,m2)|
+		g,x,y=egcd(m1,m2)
+		break if (a2-a1)%g>0
+		l=m1/g*m2
+		[(a1+(a2-a1)/g*x*m1)%l,l]
+	}
 end
 
 #第3回演習2b

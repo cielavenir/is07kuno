@@ -65,7 +65,7 @@ class Array
 	#Enumerates permutation of Array.
 	#Unlike Array#permutation, there are no duplicates in generated permutations.
 	#Instead, elements must be comparable.
-	def permutation2(n=self.size)
+	def unique_permutation(n=self.size)
 		return to_enum(:permutation2,n) unless block_given?
 		return if n<0||self.size<n
 		a=self.sort
@@ -120,11 +120,11 @@ module DBI
 	class DatabaseHandle
 		#execute-map,count-finish triplet.
 		# To use this method, you need to require dbi before requiring libciel.
-		def execute_immediate(stmt,*bindvars,&block)
+		def execute_immediate(stmt,*bindvars)
 			sth=execute(stmt,*bindvars)
 			ret=0
 			begin
-				if block then ret=sth.map(&block).count end
+				ret=sth.map(&proc).count if block_given?
 			ensure
 				sth.finish
 			end
