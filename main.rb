@@ -11,7 +11,7 @@ http://lecture.ecc.u-tokyo.ac.jp/~kuno/is07/
 boot.batがWinでもUnixでも実行できるはずです。
 =end
 
-require "rational" #^^
+require "rational" if RUBY_VERSION<'1.9'
 
 require "rbconfig"
 def rubyversion
@@ -34,6 +34,7 @@ __require "core.rb"
 __require "fib.rb"
 __require "extra.rb"
 __require "lightsout.rb"
+__require "factor.rb"
 
 #情報科学
 __require "is06.rb"
@@ -43,6 +44,10 @@ __require "is08.rb"
 __require "is10.rb"
 __require "is11.rb"
 __require "is12.rb"
+__require "is13.rb"
+__require "is14.rb"
+__require "is15.rb"
+
 __require "report1a1b2a2b3a3b4a5a5b6a6b7a.rb"
 __require "report4b.rb"
 __require "report7b.rb"

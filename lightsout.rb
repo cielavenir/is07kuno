@@ -50,6 +50,8 @@ def lightsout(x,y)
 	}
 	$stderr.print "\n"
 
+	return a
+
 	#output as C
 =begin
 	print <<"EOM"
